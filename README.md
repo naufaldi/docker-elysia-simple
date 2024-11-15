@@ -33,8 +33,8 @@ model Notes {
 1. **Clone the repository**
 
 ```bash
-git clone <repository-url>
-cd <project-directory>
+git clone https://github.com/naufaldi/docker-elysia-simple
+cd docker-elysia-simple
 ```
 
 2. **Install dependencies**
