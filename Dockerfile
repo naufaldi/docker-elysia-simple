@@ -2,20 +2,17 @@ FROM oven/bun
 
 WORKDIR /app
 
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-
 COPY ./package.json .
 COPY ./bun.lockb .
 COPY ./prisma ./prisma
 
 RUN bun install
-RUN bunx prisma migrate dev --name init 
-RUN bun run seed  
 
+# Copy the startup script
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
-COPY . .
-
-CMD ["bun", "run", "dev"]
+# Use the script as the entrypoint
+CMD ["/app/start.sh"]
 
 EXPOSE 3020
