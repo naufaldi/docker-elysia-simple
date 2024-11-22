@@ -8,6 +8,8 @@ COPY ./prisma ./prisma
 
 RUN bun install
 RUN bunx prisma migrate dev --name init
+# Add the Prisma seed command
+RUN bun run seed
 
 COPY . .
 
