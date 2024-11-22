@@ -1,24 +1,16 @@
-# Use the official Bun image
 FROM oven/bun
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY package.json bun.lockb ./
+COPY ./package.json .
+COPY ./bun.lockb .
+COPY ./prisma ./prisma
 
-# Install dependencies
 RUN bun install
+RUN bunx prisma migrate dev --name init
 
-# Generate Prisma client
-COPY prisma ./prisma
-RUN bunx prisma generate
-
-# Copy the rest of the application
 COPY . .
 
-# Expose port 3000
-EXPOSE 3000
+CMD ["bun", "run", "dev"]
 
-# Run database migrations and start the application
-CMD bunx prisma migrate deploy && bun run dev
+EXPOSE 3020
